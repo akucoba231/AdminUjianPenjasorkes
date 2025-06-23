@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Halaman Admin Ujian Penjasorkes" />
+    <meta name="author" content="Kang Helmy" />
     <title>Admin Panel</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="styles.css">
@@ -79,11 +81,37 @@
                   </div>
                     <div class="page-header pg-new">
                         <button type="button" class="no-style" id="back"><i class="fas fa-arrow-left"></i> </button> 
-                        <h1>Nama Ujian : <span id="judul-ujian"></span></h1>
+                        <h1>Halaman Ujian : <span id="judul-ujian"></span></h1>
                         <button id="tambah-soal-real" class="btn-tambah"><i class="fas fa-plus"></i> </button>
+                        <div id="keterangan-ujian">
+                            <p>Status : <span id="status-ujian" class="red">Tidak Aktif</span></p>
+                            <button id="rilis">Aktifkan</button>
+                            <button id="ubah-ujian">Edit Ujian</button>
+                        </div>
                         <input type="hidden" id="id-tema" />
                     </div>
-                    <table id="soal-real-table" class="display">
+
+
+                    <div class="card-soal">
+                        <div id="image-header">
+                            <img src="" alt="" />
+                            <button id="banner">Upload Banner (<em>Opsional</em>)</button>
+                        </div>
+
+                        <!-- <div class="soal-wrapper">
+                            <h3>Judul Soal</h3>
+                            <pre>Rincian</pre>
+                            <p>Keyword</p>
+                            <button onclick="bukaOpsi('opsi1')">Opsi</button>
+                            <div class="opsi" id="opsi1">
+                                <button>Lihat</button>
+                                <button>Hapus</button>
+                            </div>
+                        </div> -->
+
+                    </div>
+
+                    <table id="soal-real-table" class="display" style="display: none;" >
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -142,15 +170,39 @@
         </div>
     </div>
 
+    <!-- Modal Edit Ujian -->
+    <div id="update-soal-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Ujian</h2>
+            <form id="update-soal-form">
+                <div class="form-group">
+                    <label for="update-judul-ujian">Judul Ujian</label>
+                    <input type="text" id="update-judul-ujian" required />
+                </div>
+                <div class="form-group">
+                    <label for="update-deskripsi-ujian">Deskripsi</label>
+                    <textarea id="update-deskripsi-ujian" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="update-token-ujian">Token Ujian</label>
+                    <input type="text" id="update-token-ujian" required />
+                </div>
+                <button type="button" id="batal-ubah-ujian" class="btn-cancel">Batal</button>
+                <button type="submit" id="proses-ubah-ujian" class="btn-submit">Edit</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal Tambah Soal Real -->
     <div id="soal-real-modal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content" id="modal-custom">
             <span class="close">&times;</span>
             <h2>Tambah Soal Baru</h2>
             <form id="soal-real-form">
                 <div class="form-group">
                     <label for="judul-soal">Judul Soal</label>
-                    <textarea id="judul-soal" required></textarea>
+                    <input type="text" id="judul-soal" required />
                 </div>
                 <div class="form-group">
                     <label for="rincian">Rincian Soal</label>
@@ -173,6 +225,44 @@
                     <input type="text" id="nasihat" required>
                 </div>
                 <button type="submit" class="btn-submit">Simpan</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Tambah Soal Real -->
+    <div id="update-soal-real-modal" class="modal">
+        <div class="modal-content" id="modal-custom">
+            <span class="close">&times;</span>
+            <h2>Edit Soal</h2>
+            <form id="update-soal-real-form">
+                <div class="form-group">
+                    <label for="judul-update">Judul Soal</label>
+                    <input class="Update" type="text" id="judul-update" required />
+                </div>
+                <div class="form-group">
+                    <label for="rincian-update">Rincian Soal</label>
+                    <textarea class="Update" id="rincian-update" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ideal-update">Jawaban Ideal</label>
+                    <textarea class="Update" id="ideal-update" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="keyword-update">Kata Kunci (pisahkan dengan koma)</label>
+                    <input class="Update" type="text" id="keyword-update" required>
+                </div>
+                <div class="form-group">
+                    <label for="saran-update">Saran (jika nilai bagus)</label>
+                    <input class="Update" type="text" id="saran-update" required>
+                </div>
+                <div class="form-group">
+                    <label for="nasihat-update">Nasihat (jika nilai kurang)</label>
+                    <input class="Update" type="text" id="nasihat-update" required>
+                </div>
+                <div>
+                    <button type="button" id="batal-ubah" class="btn-cancel">Batal</button>
+                    <button type="submit" id="ubah-soal" class="btn-submit">Ubah</button>
+                </div>
             </form>
         </div>
     </div>
