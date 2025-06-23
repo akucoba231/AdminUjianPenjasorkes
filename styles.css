@@ -106,7 +106,7 @@ body {
 }
 
 .content {
-    max-width: 1200px;
+    max-width: 1200px; /*1200px*/
     margin: 0 auto;
     width: 100%;
 }
@@ -128,11 +128,15 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
-    padding-bottom: 16px;
+    padding: 16px 0;
+    border-top: 1px solid #dadce0;
     border-bottom: 1px solid #dadce0;
 }
 .page-header h1 {
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .pg-new {
   flex-direction: row;
@@ -142,13 +146,57 @@ body {
 .pg-new button, #change button {
   background: #f8fafb;
   border: 2px solid white;
-  padding: 2% 3%;
+  padding: 1.5%;
   border-radius: 10px;
   box-shadow: 0px 0px 5px #999;
 }
 
 .pg-new button:active, #change button:active {
   box-shadow: inset 1px 1px 2px #999;
+}
+
+#tambah-soal-real {
+    position: fixed;
+    right: 10%;
+    bottom: 10%;
+    background-color: #4285f4;
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: bold;
+    width: 56px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+
+#tambah-soal-real:hover:after {
+    position: absolute;
+    top: -55%;
+    left: 50%;
+    transform: translateX(-50%);
+    content: "Tambah soal ujian";
+    z-index: 2;
+    white-space: nowrap;
+    padding: 1px 2.5px;
+    background-color: #dea;
+    color: #000;
+    font-weight: normal;
+    font-size: 0.7em;
+}
+
+#tambah-soal-real:hover:before {
+    position: absolute;
+    content: "";
+    border-top: 10px solid #dea;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    z-index: 2;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .page-header h1 {
@@ -268,20 +316,23 @@ body {
     z-index: 1000;
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: rgba(0,0,0,0.5);
-    overflow-y: scroll;
 }
 
 .modal-content {
+    position: relative;
     background-color: white;
-    margin: 5% auto;
+    margin: 0.5% auto;
     padding: 24px;
     border-radius: 8px;
-    width: 50%;
-    max-width: 600px;
+    width: 80%;
+    height: auto;
+    max-height: 100vw;
+    max-width: 800px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    overflow-y: scroll;
 }
 
 .close {
@@ -290,7 +341,7 @@ body {
     top: 24px;
     font-size: 1.5rem;
     cursor: pointer;
-    color: #5f6368;
+    color: #fff;
 }
 
 .close:hover {
@@ -299,19 +350,22 @@ body {
 
 .form-group {
     margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
     font-weight: 500;
     color: #202124;
+    width: 25%;
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select {
-    width: 100%;
+    width: 73%;
     padding: 12px;
     border: 1px solid #dadce0;
     border-radius: 4px;
@@ -319,11 +373,11 @@ body {
 }
 
 .form-group textarea {
-    min-height: 120px;
+    min-height: 70px;
     resize: vertical;
 }
 
-.btn-submit {
+.btn-submit, .btn-cancel {
     background-color: #4285f4;
     color: white;
     border: none;
@@ -338,6 +392,10 @@ body {
 
 .btn-submit:hover {
     background-color: #3367d6;
+}
+
+.btn-cancel {
+    background: #ea4335;
 }
 
 /* Button Styles */
@@ -444,7 +502,6 @@ table tr td:last-child:active, table tr td:last-child:hover{
   display: flex;
   justify-content: end;
   align-items: center;
-  margin-bottom: 3%;
   cursor: pointer;
   user-select: none;
 }
@@ -457,4 +514,135 @@ table tr td:last-child:active, table tr td:last-child:hover{
 #change button {
   border-bottom: 3px solid #4285f4;
   border-radius: 10px 10px 0 0;
+}
+
+.card-soal {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+#image-header, .soal-wrapper {
+    width: 100%;
+    max-width: 640px;
+    position: relative;
+    border: 0.5px solid rgba(190,190,190,.5);
+    border-radius: 10px;
+}
+#image-header {
+    height: auto;
+    aspect-ratio: 4 / 1;
+    overflow: hidden;
+}
+
+
+
+#image-header > img {
+    width: 100%;
+    aspect-ratio: 4 / 1;
+    object-fit: contain;
+}
+
+#image-header > button {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 1%;
+    background: rgba(255,255,255,.9);
+    color: #000;
+    /*color: rgb(66,133,244);*/
+    border-radius: 0 20px 0 0;
+}
+
+#image-header > button:hover:after {
+    position: absolute;
+    content: "Unggah foto untuk banner ujian dengan perbandingan 4 : 1 (Untuk hasil optimal)";
+    top: -20px;
+    left: 15px;
+    white-space: nowrap;
+    background: #dea;
+    z-index: 5;
+    padding: 0.5%;
+}
+
+.soal-wrapper {
+    position: relative;
+    font-family: sans-serif;
+    height: auto;
+    padding: 0.5% 1% 1% 1%;
+}
+
+.soal-wrapper > * {
+    border-bottom: 1px solid rgba(190,190,190,.7);
+    margin-bottom: 1%;
+}
+
+.soal-wrapper > button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0.5%;
+    border-radius: 10px;
+    height: 30px;
+    width: 50px;
+    z-index: 4;
+}
+.opsi {
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 1px;
+    background: rgba(50,50,50,.7);
+    padding: 5px;
+    position: absolute;
+    z-index: 5;
+    right: 0;
+    top: 40px;
+    height: auto;
+    width: 70px;
+    border-radius: 5px;
+}
+
+.opsi::before {
+    position: absolute;
+    content: "";
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-bottom: 10px solid rgba(50,50,50,.7);
+    top: -10px;
+    right: 20px;
+}
+
+#update-soal-real-form > div:last-child {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#keterangan-ujian {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 5px;
+}
+
+#keterangan-ujian p {
+    font-size: 0.9em;
+}
+
+#keterangan-ujian .red {
+    color: #d10;
+}
+
+#keterangan-ujian .green {
+    color: #dea;
 }
