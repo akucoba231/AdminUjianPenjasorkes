@@ -140,7 +140,7 @@ function updateTable(id_tema){
     }
   })
   
-  for(let i = 1; i < 6; i++){
+  for(let i = 1; i < 11; i++){
     let th = document.createElement("th")
     th.textContent = "Jawaban " + i
     headerRow.appendChild(th);
