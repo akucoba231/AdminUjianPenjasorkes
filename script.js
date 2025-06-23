@@ -1,6 +1,8 @@
  function share(token){
-      alert(window.location.href + "?token=" + token)
-    }
+    alert(window.location.href + "?token=" + token)
+ }
+
+
 
 $(document).ready(function() {
     let url = "";
@@ -72,6 +74,8 @@ $(document).ready(function() {
             }
         });
 
+        // 21/06/2025 14:00 Table Soal dari Ujian dinonaktifkan
+        /*
         soalRealTable = $('#soal-real-table').DataTable({
             responsive: true,
             scrollX: true,
@@ -109,6 +113,15 @@ $(document).ready(function() {
                 }
             }
         });
+        */
+
+        /*
+        soalRealTable.on('order.dt search.dt', function () {
+            soalRealTable.column(0, {search:'applied', order:'applied'}).nodes().each(function (cell, i) {
+                cell.innerHTML = i+1;
+            });
+        }).draw();
+        */
 
         jawabanTable = $('#jawaban-table').DataTable({
             responsive: true,
@@ -151,11 +164,6 @@ $(document).ready(function() {
             });
         }).draw();
 
-        soalRealTable.on('order.dt search.dt', function () {
-            soalRealTable.column(0, {search:'applied', order:'applied'}).nodes().each(function (cell, i) {
-                cell.innerHTML = i+1;
-            });
-        }).draw();
         
         jawabanTable.on('order.dt search.dt', function () { // Tambahkan untuk jawabanTable
             jawabanTable.column(0, {search:'applied', order:'applied'}).nodes().each(function (cell, i) {
@@ -217,6 +225,8 @@ $(document).ready(function() {
     const soalModal = $('#soal-modal');
     const jawabanModal = $('#jawaban-modal');
     const soalRealModal = $('#soal-real-modal');
+    const updateSoalRealModal = $('#update-soal-real-modal');
+    const updateUjian = $('#update-soal-modal');
 
     $('#tambah-soal').click(function() {
         // Reset form sebelum menampilkan modal
@@ -240,6 +250,7 @@ $(document).ready(function() {
         soalModal.hide();
         jawabanModal.hide();
         soalRealModal.hide();
+        updateSoalRealModal.hide();
     });
 
     $(window).click(function(event) {
@@ -251,6 +262,12 @@ $(document).ready(function() {
         }
         if (event.target === soalRealModal[0]) {
             soalRealModal.hide();
+        }
+        if (event.target === updateSoalRealModal[0]) {
+            updateSoalRealModal.hide();
+        }
+        if (event.target === updateUjian[0]) {
+            updateUjian.hide();
         }
     });
 
@@ -338,17 +355,25 @@ $(document).ready(function() {
     //fungsi filter pada table daftar soal
     function ambilSoalWhere(id_tema){
         // Filter data soalData berdasarkan id_tema yang diberikan
-        const filteredSoal = soalData.filter(item => item.id_tema == id_tema);
-        soalRealTable.clear().rows.add(filteredSoal).draw();
+        const filteredSoal = soalData.filter(item => item.id_tema == id_tema); //array
+        //soalRealTable.clear().rows.add(filteredSoal).draw();
+
+        //new function
+        let cardSoal = $('.card-soal')[0];
+        createListSoal(cardSoal, filteredSoal);
         buka(id_tema);
     }
 
+    //23/06/2025
+    //untuk data ujian
+    let descUjian;
     // menampilkan soal per ujian
     $(document).on('click', '.btn-look', function() {
         $('.page').removeClass('active');
         $('#soal-real').addClass('active');
         const judulUjian = $(this).data('judul');
         const idTema = $(this).data('id');
+        descUjian = flashData(idTema);
         $('#judul-ujian').text(judulUjian);
         $('#id-tema').val(idTema); // Set id_tema ke input hidden di form soal real
         ambilSoalWhere(idTema);
@@ -381,6 +406,20 @@ $(document).ready(function() {
             loadscreen();
         });
     }
+
+    function ambilTemaUpdate(){
+        loadscreen();
+        $.ajax(settings).done(function (response) {
+            temaUjian = response;
+            let tmp = flashData(descUjian.id);
+            descUjian = tmp;
+            loadscreen();
+        })
+        .fail(function(e){
+            $('#err-msg').text(JSON.stringify(e));
+            loadscreen();
+        });
+    }
     
     // fungsi untuk mengambil data soal
     let soalSet = {
@@ -401,6 +440,7 @@ $(document).ready(function() {
             soalData = response;
             // soalRealTable.clear().rows.add(soalData).draw(); // Jangan langsung draw semua soal di sini, karena sudah ada filter ambilSoalWhere
             loadscreen();
+            console.log("data update!");
         })
         .fail(function(e){
             $('#err-msg').text(JSON.stringify(e));
@@ -580,7 +620,7 @@ $(document).ready(function() {
         loadscreen();
         $.ajax(lembarsettings).done(function (response) {
             jawabanData = response;
-            console.log(response);
+            //console.log(response);
             updateStats(); // Perbarui statistik setelah data tema diperbarui
             loadscreen();
         })
@@ -592,20 +632,269 @@ $(document).ready(function() {
     
     
     function buka(id_tema){
+      let cekUrl = window.location.href;
+      if(cekUrl.includes('index.html')){
+        cekUrl = cekUrl + "index.html";
+      }
       let base = window.location.href.split("index.html")[0]
       let halamanJawaban = document.getElementById("halaman-jawaban");
-      console.log(halamanJawaban)
+      //console.log(halamanJawaban)
       
       halamanJawaban.setAttribute('data-to', id_tema);
     
-    console.log(halamanJawaban)
+    //console.log(halamanJawaban)
     
     halamanJawaban.onclick = (e)=>{
-      window.open(base + "jawaban.html?id_tema=" + id_tema);
+      return confirm("Anda akan dialihkan ke halaman jawaban, lanjutkan ?") ? window.open(base + "jawaban.html?id_tema=" + id_tema) : "";
     }
     
     }
+
+    function getImageHeader(){
+        let imageHeader = document.getElementById('image-header');
+        let isi = imageHeader.innerHTML;
+        return [imageHeader, isi];
+    }
    
-   
+    function createListSoal(el, arr){
+        //console.log(el);
+        let idTemaFilter = document.getElementById('id-tema');
+        idTemaFilter = idTemaFilter.value;
+        let backup = getImageHeader();
+
+
+        el.innerHTML = "";
+        let imageHeader = document.createElement('div');
+        imageHeader.setAttribute('id','image-header');
+        imageHeader.innerHTML = backup[1];
+
+        el.appendChild(imageHeader);
+
+        if(arr.length <= 0){
+            let block = document.createElement('div');
+            block.setAttribute('class','card-wrapper');
+            block.textContent = "Tidak ada soal terdeteksi";
+            el.appendChild(block);
+        }
+        else { 
+
+            Array.from(arr).forEach((item, k)=>{
+                //console.log(k);
+                let cardWrapper = document.createElement('div');
+                cardWrapper.setAttribute('class','soal-wrapper')
+                let judul = document.createElement('h3');
+                judul.innerHTML = "<b>Judul Soal</b> : " + item.judul_soal;
+
+                let rincian = document.createElement('p');
+                rincian.innerHTML = "<b>Soal</b> : " + item.rincian;
+
+                let jawab = document.createElement('p');
+                jawab.innerHTML = "<b>Jawaban Ideal</b> : " + item.keyword;
+
+                let word = document.createElement('p');
+                word.innerHTML = "<b>Kata Kunci</b> : " +  item.keyword;
+
+                let opsi = document.createElement('button');
+                opsi.textContent = "Opsi";
+                opsi.onclick = (e)=>{
+                    e.preventDefault();
+                    bukaOpsi(`opsi${k}`);
+                }
+
+                let isiOpsi = document.createElement('div');
+                isiOpsi.setAttribute('class','opsi');
+                isiOpsi.setAttribute('id','opsi' + k);
+
+                let lihatOpsi = document.createElement('button');
+                lihatOpsi.textContent = "Lihat";
+                //lihat modal update
+                lihatOpsi.onclick = (e)=>{
+                    e.preventDefault();
+                    openModalSoalUpdate(idTemaFilter, item);
+                }
+                let hapusOpsi = document.createElement('button');
+                hapusOpsi.textContent = "Hapus";
+                hapusOpsi.onclick = ()=>{
+                    return confirm("Anda akan menghapus soal ini ?") ? soalDel(item._id, idTemaFilter) : '';
+                }
+
+                isiOpsi.appendChild(lihatOpsi);
+                isiOpsi.appendChild(hapusOpsi);
+
+                cardWrapper.appendChild(judul);
+                cardWrapper.appendChild(rincian);
+                cardWrapper.appendChild(jawab);
+                cardWrapper.appendChild(word);
+                cardWrapper.appendChild(isiOpsi);
+                cardWrapper.appendChild(opsi);
+                el.appendChild(cardWrapper);
+            })
+        }
+    }   
+
+    function openModalSoalUpdate(id_tema, arr){
+        //let modalSoalUpdate = updateSoalRealModal;
+        let update = $('.Update');
+        let ubahSoal = document.getElementById('ubah-soal');
+        let batalUbah = document.getElementById('batal-ubah');
+        // judul, rincian, jawaban, keyword, saran, nasihat
+        update[0].value = arr.judul_soal
+        update[1].value = arr.rincian
+        update[2].value = arr.ideal
+        update[3].value = arr.keyword
+        update[4].value = arr.saran
+        update[5].value = arr.nasihat
+
+        batalUbah.onclick = (e)=> {
+            e.preventDefault()
+            updateSoalRealModal.hide();
+        }
+
+        ubahSoal.onclick = (e)=>{
+            updateSoalRealModal.hide();
+            e.preventDefault();
+
+            let jsondata = {
+                "judul_soal" : update[0].value,
+                "rincian" : update[1].value,
+                "ideal" : update[2].value,
+                "keyword" : update[3].value,
+                "saran" : update[4].value,
+                "nasihat" : update[5].value,
+            }
+
+            let set = {
+                "async": true,
+                  "crossDomain": true,
+                  "url": url + "soal/" + arr._id,
+                  "method": "PUT",
+                  "headers": {
+                    "content-type": "application/json",
+                    "x-apikey": myapi,
+                    "cache-control": "no-cache"
+                  },
+                  "processData": false,
+                  "data": JSON.stringify(jsondata)
+            }
+            //console.log(jsondata)
+            loadscreen()
+            
+            $.ajax(set).done(function (response) {
+              //console.log(response);
+              ambilSoal();
+
+              const idTema = $('#id-tema').val();
+            
+                if (idTema) {
+                // Beri sedikit delay untuk memastikan 'soalData' sudah terupdate dari 'ambilSoal()'
+                  loadscreen()
+                  setTimeout(() =>{
+                //console.log('ambil soal');
+                  ambilSoalWhere(idTema)
+                  loadscreen()
+                }, 2200); 
+            }
+            loadscreen();
+            })
+            .fail(function(e){
+                $('#err-msg').text(JSON.stringify(e));
+                loadscreen();
+            });
+            
+        }
+
+        updateSoalRealModal.show();
+    }
+
+
+    function bukaOpsi(idEl){
+        //console.log(idEl);
+        //console.log(typeof idEl)
+        let el = document.getElementById(idEl)
+        if(el.style.display == "flex"){
+            el.style.display = "none"
+        }
+        else {
+            el.style.display = "flex";
+        }
+    } 
+
+    function flashData(id_tema){
+        //console.log("flashdata : ")
+        //console.log(temaUjian)
+        //console.log("id tema : " + id_tema)
+        let tmp = temaUjian.filter(item=> item.id == id_tema);
+        //console.log(tmp)
+        if(tmp.length > 1){
+            alert('Error : terdapat dua ujian dengan id sama');
+            return;
+        }
+        else {
+            tmp = tmp[0];
+        }
+        return tmp;
+    }
+
+    const ubahUjian = document.getElementById('ubah-ujian')
+    ubahUjian.onclick = (e)=>{
+        //console.log(descUjian);
+        let judul = document.getElementById('update-judul-ujian');
+        judul.value = descUjian.judul;
+        let deskripsi = document.getElementById('update-deskripsi-ujian');
+        deskripsi.value = descUjian.deskripsi;
+        let token = document.getElementById('update-token-ujian');
+        token.value = descUjian.token;
+        let batal = document.getElementById('batal-ubah-ujian');
+        batal.onclick = (e)=>{
+            e.preventDefault();
+            updateUjian.hide();
+        }
+
+        let proses = document.getElementById('proses-ubah-ujian');
+        proses.onclick = (e)=>{
+            e.preventDefault();
+            var jsondata = {
+                judul       : judul.value,
+                deskripsi   : deskripsi.value,
+                token       : token.value
+            };
+            var sets = {
+                "async": true,
+                "crossDomain": true,
+                "url": url + "tema/" + descUjian._id,
+                "method": "PUT",
+                "headers": {
+                "content-type": "application/json",
+                "x-apikey": myapi,
+                "cache-control": "no-cache"
+            },
+            "processData": false,
+            "data": JSON.stringify(jsondata)    
+            }
+            loadscreen()
+            $.ajax(sets).done(function (response) {
+                loadscreen();
+                console.log(response);
+                ambilTemaUpdate();
+            })
+            .fail(function(e){
+                $('#err-msg').text(JSON.stringify(e));
+                loadscreen();
+            });
+
+            updateUjian.hide();
+
+        }
+
+
+        updateUjian.show();
+    }
+
+    let banner = document.getElementById('banner');
+    banner.onclick = (e)=>{
+        alert('Fitur segera diupdate');
+    }
+
+
 });
 
