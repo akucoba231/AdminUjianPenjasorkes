@@ -1,0 +1,751 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #202124;
+}
+
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header/Navbar Styles */
+.header {
+    background-color: white;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #5f6368;
+    display: flex;
+    align-items: center;
+}
+
+.logo i {
+    margin-right: 12px;
+    color: #4285f4;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user-info span {
+    color: #5f6368;
+}
+
+.user-info i {
+    font-size: 1.5rem;
+    color: #5f6368;
+}
+
+/* Menu Styles */
+.menu {
+    list-style: none;
+    display: flex;
+    border-bottom: 1px solid #dadce0;
+    padding: 0 16px;
+    background: white;
+}
+
+.menu li {
+    padding: 16px 24px;
+    cursor: pointer;
+    position: relative;
+    color: #5f6368;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.menu li i {
+    margin-right: 8px;
+}
+
+.menu li:hover {
+    color: #202124;
+}
+
+.menu li.active {
+    color: #4285f4;
+}
+
+.menu li.active:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #4285f4;
+}
+
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    background-color: #f8f9fa;
+    padding: 24px;
+}
+
+.content {
+    max-width: 1200px; /*1200px*/
+    margin: 0 auto;
+    width: 100%;
+}
+
+.page {
+    display: none;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+    padding: 24px;
+}
+
+.page.active {
+    display: block;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 16px 0;
+    border-top: 1px solid #dadce0;
+    border-bottom: 1px solid #dadce0;
+}
+.page-header h1 {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+
+.pg-new {
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.pg-new button, #change button {
+  background: #f8fafb;
+  border: 2px solid white;
+  padding: 1.5%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px #999;
+}
+
+.pg-new button:active, #change button:active {
+  box-shadow: inset 1px 1px 2px #999;
+}
+
+#tambah-soal-real {
+    position: fixed;
+    right: 10%;
+    bottom: 10%;
+    background-color: #4285f4;
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: bold;
+    width: 56px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    z-index: 5;
+}
+
+#tambah-soal-real:hover:after {
+    position: absolute;
+    top: -55%;
+    left: 50%;
+    transform: translateX(-50%);
+    content: "Tambah soal ujian";
+    z-index: 2;
+    white-space: nowrap;
+    padding: 1px 2.5px;
+    background-color: #dea;
+    color: #000;
+    font-weight: normal;
+    font-size: 0.7em;
+}
+
+#tambah-soal-real:hover:before {
+    position: absolute;
+    content: "";
+    border-top: 10px solid #dea;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    z-index: 2;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.page-header h1 {
+    font-size: 1.5rem;
+    color: #202124;
+    font-weight: 400;
+}
+
+.page-header h1 i {
+    margin-right: 12px;
+    color: #4285f4;
+}
+
+/* Floating Action Button */
+.fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #4285f4;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    cursor: pointer;
+    z-index: 100;
+    border: none;
+    font-size: 1.5rem;
+}
+
+.fab:hover {
+    background-color: #3367d6;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.16), 0 2px 4px rgba(0,0,0,0.23);
+}
+
+/* DataTables Styles */
+.dataTables_wrapper {
+    margin-top: 20px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dataTables_wrapper .dataTables_scroll {
+    width: 100%;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    padding: 8px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    margin-left: 8px;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    padding: 8px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 8px 12px;
+    margin: 0 2px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #5f6368;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #4285f4;
+    color: white;
+    border: 1px solid #4285f4;
+}
+
+/* Card Styles */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.card {
+    background-color: white;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.card h3 {
+    color: #5f6368;
+    margin-bottom: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.card p {
+    font-size: 2rem;
+    font-weight: 400;
+    color: #202124;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    margin: 0.5% auto;
+    padding: 24px;
+    border-radius: 8px;
+    width: 80%;
+    height: auto;
+    max-height: 100vw;
+    max-width: 800px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    overflow-y: scroll;
+}
+
+#soal-real-modal > .modal-content, #update-soal-real-modal > .modal-content {
+    width: 100vw;
+    height: 90vh;
+    scrollbar-width: revert;
+}
+
+#soal-real-modal .form-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid #999;
+    border-radius: 10px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+#soal-real-modal .form-group:nth-child(4) {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+#soal-real-modal .form-group:nth-child(4):before {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 5px);
+    width: 100%;
+    content: "=== Bagian Feedback Hasil Evaluasi Soal ===";
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.close {
+    position: absolute;
+    right: 24px;
+    top: 24px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #fff;
+}
+
+.close:hover {
+    color: #202124;
+}
+
+.form-group {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    color: #202124;
+    width: 25%;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 73%;
+    padding: 12px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.btn-submit, .btn-cancel {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.btn-submit:hover {
+    background-color: #3367d6;
+}
+
+.btn-cancel {
+    background: #ea4335;
+}
+
+/* Button Styles */
+.btn-action {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 4px;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-edit, .btn-share {
+    background-color: #fbbc04;
+    color: #202124;
+    display: none;
+}
+
+.btn-look {
+    background-color: #34a853;
+    color: white;
+}
+
+.btn-delete {
+    background-color: #ea4335;
+    color: white;
+}
+
+.btn-action:hover {
+    opacity: 0.9;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .menu li {
+        padding: 12px 16px;
+    }
+    
+    .dataTables_wrapper {
+        width: 100%;
+    }
+    
+    .modal-content {
+        width: 80%;
+        height: 100vh;
+        overflow: scroll;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+    .modal-content {
+        width: 100%;
+        height: 100vh;
+        overflow-y: scroll;
+    }
+}
+
+table tr th, table tr td {
+  max-width: clamp(200px, 360px, 480px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+table tr td:active, table tr td:hover {
+  white-space: nowrap;
+  transform: scale(1);
+}
+
+table tr td:last-child:active, table tr td:last-child:hover{
+  white-space: nowrap;
+  transform: scale(1);
+}
+
+#loadscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,.3);
+  color: #fff;
+  font-style: italic;
+  z-index: 10;
+}
+
+.ls-gone {
+  display: none;
+}
+
+.ls-active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#change {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+#change > * {
+  box-sizing: border-box;
+  padding: 3%;
+}
+
+#change button {
+  border-bottom: 3px solid #4285f4;
+  border-radius: 10px 10px 0 0;
+}
+
+.card-soal {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+#image-header, .soal-wrapper {
+    width: 100%;
+    max-width: 640px;
+    position: relative;
+    border: 0.5px solid rgba(190,190,190,.5);
+    border-radius: 10px;
+}
+#image-header {
+    position: relative;
+    height: auto;
+    aspect-ratio: 4 / 1;
+    overflow: normal;
+}
+
+
+
+#image-header > img {
+    width: 100%;
+    aspect-ratio: 4 / 1;
+    object-fit: contain;
+}
+
+#image-header > button {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 1%;
+    background: rgba(255,255,255,.9);
+    color: #000;
+    /*color: rgb(66,133,244);*/
+    border-radius: 0 20px 0 0;
+}
+
+#image-header > button:hover:after {
+    position: absolute;
+    content: "Unggah foto untuk banner ujian dengan perbandingan 4 : 1 (Untuk hasil optimal)";
+    top: -20px;
+    left: 15px;
+    white-space: nowrap;
+    background: #dea;
+    z-index: 5;
+    padding: 0.5%;
+}
+
+#image-header > button:last-child {
+    position: absolute;
+    left: 100%;
+    transform: translateX(-100%);
+    top: 0;
+    height: 30px;
+    width: 120px;
+    white-space: nowrap;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+}
+
+#image-header > button:last-child:hover:after {
+    position: absolute;
+    content: "Untuk menghapus banner dari tema ujian";
+    top: 120%;
+    left: 100%;
+    transform: translateX(-100%);
+    white-space: nowrap;
+    background: #dea;
+    z-index: 5;
+    padding: 1%;
+}
+
+#hapus-header {
+    font-size: 2rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+}
+
+.soal-wrapper {
+    position: relative;
+    font-family: sans-serif;
+    height: auto;
+    padding: 0.5% 1% 1% 1%;
+}
+
+.soal-wrapper > * {
+    border-bottom: 1px solid rgba(190,190,190,.7);
+    margin-bottom: 1%;
+}
+
+.soal-wrapper > button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0.5%;
+    border-radius: 10px;
+    height: 30px;
+    width: 50px;
+    z-index: 4;
+}
+.soal-wrapper > button:hover:before{
+    position: absolute;
+    content: "Tekan kembali tombol untuk menutup opsi.";
+    white-space: nowrap;
+    font-size: 0.8em;
+    padding: 2px;
+    background-color: #dea;
+    color: #222;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+
+.opsi {
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 1px;
+    background: rgba(50,50,50,.7);
+    padding: 5px;
+    position: absolute;
+    z-index: 5;
+    right: 0;
+    top: 40px;
+    height: auto;
+    width: 70px;
+    border-radius: 5px;
+}
+
+.opsi::before {
+    position: absolute;
+    content: "";
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-bottom: 10px solid rgba(50,50,50,.7);
+    top: -10px;
+    right: 20px;
+}
+
+#update-soal-real-form > div:last-child {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#keterangan-ujian {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 5px;
+    border-left: 5px solid #4285f4;
+    padding-left: 5px;
+    margin-left: 2px;
+}
+
+#keterangan-ujian p {
+    font-size: 0.9em;
+}
+
+#keterangan-ujian .red {
+    color: #d10;
+}
+
+#keterangan-ujian .green {
+    color: #673;
+    font-weight: bold;
+}
+
+input {
+    white-space: normal;
+}
+

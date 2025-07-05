@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Jawaban Ujian Penjaskorkes</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        h1, h2, h3 {
+            color: #202124;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .table-wrapper {
+            /*width: fit-content; /* Sesuaikan lebar wrapper dengan konten tabel */
+            width: 100%;
+            margin: 0 auto;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            overflow-x: scroll; /* Mengaktifkan scroll horizontal */
+            box-shadow: 0 1px 3px rgba(60,64,67,.3);
+            background-color: #fff;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            /* Hapus table-layout: fixed; agar lebar kolom menyesuaikan konten jika perlu */
+            /* Namun, karena kita ingin nowrap, kita biarkan min-width di td/th untuk kontrol */
+        }
+
+        th, td {
+            border: 1px solid #dadce0;
+            padding: 8px 12px;
+            text-align: left;
+            white-space: nowrap; /* Tetap menggunakan white-space: nowrap */
+            /* Hapus overflow: hidden; dan text-overflow: ellipsis; untuk menonaktifkan truncate */
+            min-width: 100px; /* Lebar kolom default, akan menyesuaikan jika konten lebih panjang */
+        }
+
+        th {
+            background-color: #f0f3f4;
+            font-weight: 500;
+            color: #5f6368;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fcfdfe;
+        }
+
+        td[contenteditable="true"] {
+            background-color: #fff;
+            outline: none;
+            cursor: text;
+        }
+
+        td[contenteditable="true"]:focus {
+            box-shadow: inset 0 0 0 2px #1a73e8;
+        }
+
+        .id-column {
+            background-color: #ebebeb;
+            color: #757575;
+            cursor: not-allowed;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .export-button {
+            background-color: #34a853; /* Warna hijau Google */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .export-button:hover {
+            background-color: #2e8b46;
+        }
+    </style>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script> </head>
+<body>
+
+    <h1>Halaman Jawaban Ujian Penjaskorkes</h1>
+    <h2 id="nama-ujian">Data sedang dimuat</h2>
+    <h3 id="kode-ujian">Data sedang dimuat</h3>
+
+    <div class="button-container">
+        <button class="export-button" onclick="exportToXLSX()">Export to XLSX</button>
+    </div>
+
+    <div class="table-wrapper">
+        <table id="dataTable">
+            <thead>
+                <!--<tr>
+                    <th>ID</th>
+                    <th>Tanggal</th>
+                    <th>ID Ujian</th>
+                    <th>Nama Ujian</th>
+                    <th>Nama Siswa</th>
+                    <th>Kelas</th>
+                    <th>Absen</th>
+                    <th>Total Score</th>
+                    <th>Jawaban 1</th>
+                    <th>Jawaban 2</th>
+                    <th>Jawaban 3</th>
+                    <th>Jawaban 4</th>
+                    <th>Jawaban 5</th>
+                </tr>-->
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script src="jawabanscript.js"></script>
+
+    <script>
+      /*
+        const dummyData = [
+            {
+                id: 1,
+                tanggal: '2024-05-10',
+                id_ujian: 'PJ001',
+                nama_ujian: 'Atletik Dasar',
+                nama_siswa: 'Budi Santoso',
+                kelas: 'X A',
+                absen: 5,
+                total_score: 85,
+                jawaban1: 0,
+                jawaban2: 0,
+                jawaban3: 0,
+                jawaban4: 0,
+                jawaban5: 0
+            },
+            {
+                id: 2,
+                tanggal: '2024-05-10',
+                id_ujian: 'PJ002',
+                nama_ujian: 'Senam Lantai',
+                nama_siswa: 'Siti Aminah',
+                kelas: 'X B',
+                absen: 12,
+                total_score: 90,
+                jawaban1: 0,
+                jawaban2: 0,
+                jawaban3: 0,
+                jawaban4: 0,
+                jawaban5: 0
+            },
+            {
+                id: 3,
+                tanggal: '2024-05-11',
+                id_ujian: 'PJ003',
+                nama_ujian: 'Renang Gaya Bebas',
+                nama_siswa: 'Rudi Hartono',
+                kelas: 'XI C',
+                absen: 7,
+                total_score: 78,
+                jawaban1: 0,
+                jawaban2: 0,
+                jawaban3: 0,
+                jawaban4: 0,
+                jawaban5: 0
+            },
+            {
+                id: 4,
+                tanggal: '2024-05-11',
+                id_ujian: 'PJ004',
+                nama_ujian: 'Permainan Bola Voli',
+                nama_siswa: 'Dewi Lestari',
+                kelas: 'XI D',
+                absen: 20,
+                total_score: 92,
+                jawaban1: 0,
+                jawaban2: 0,
+                jawaban3: 0,
+                jawaban4: 0,
+                jawaban5: 0
+            },
+            {
+                id: 5,
+                tanggal: '2024-05-12',
+                id_ujian: 'PJ005',
+                nama_ujian: 'Kebugaran Jasmani',
+                nama_siswa: 'Fajar Kurniawan',
+                kelas: 'XII E',
+                absen: 3,
+                total_score: 88,
+                jawaban1: 0,
+                jawaban2: 0,
+                jawaban3: 0,
+                jawaban4: 0,
+                jawaban5: 0
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const tableBody = document.querySelector('#dataTable tbody');
+
+            function renderTable(data) {
+                tableBody.innerHTML = '';
+                data.forEach(rowData => {
+                    const row = document.createElement('tr');
+                    Object.keys(rowData).forEach(key => {
+                        const cell = document.createElement('td');
+                        cell.textContent = rowData[key];
+
+                        if (key !== 'id') {
+                            cell.setAttribute('contenteditable', 'true');
+                        } else {
+                            cell.classList.add('id-column');
+                        }
+
+                        cell.addEventListener('blur', (e) => {
+                            const rowIndex = Array.from(row.parentNode.children).indexOf(row);
+                            const colIndex = Array.from(e.target.parentNode.children).indexOf(e.target);
+                            const columnKey = Object.keys(dummyData[rowIndex])[colIndex];
+                            
+                            // Update data di array dummyData
+                            dummyData[rowIndex][columnKey] = e.target.textContent;
+                            console.log(`Data updated: ${columnKey} di baris ${rowIndex} menjadi ${e.target.textContent}`);
+                            console.log(dummyData[rowIndex]);
+                        });
+                        row.appendChild(cell);
+                    });
+                    tableBody.appendChild(row);
+                });
+            }
+
+            renderTable(dummyData);
+        });
+        */
+
+        // Fungsi untuk export ke XLSX
+        function exportToXLSX() {
+            /* Ambil data dari tabel HTML */
+            const table = document.getElementById('dataTable');
+            const ws = XLSX.utils.table_to_sheet(table);
+
+            /* Buat workbook baru */
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Data Ujian");
+
+            /* Tulis file XLSX */
+            XLSX.writeFile(wb, "DataUjianPenjaskorkes_" + temaUjian.token +".xlsx");
+        }
+    </script>
+</body>
+</html>
