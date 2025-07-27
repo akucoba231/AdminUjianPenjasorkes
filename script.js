@@ -11,6 +11,7 @@ $(document).ready(function() {
     const url2 = "https://nlpdata2-9d3f.restdb.io/rest/";
     const myapi1 = "684301ad72702c6cc4b3d7d2";
     const myapi2 = "6843f2e8e22293a1177497af";
+    const url3 = "http://localhost/aplikasi-slim/public/";
 
     url = url1;
     myapi = myapi1;
@@ -185,7 +186,9 @@ $(document).ready(function() {
         $('#total-soal').text(temaUjian.length); // Menggunakan temaUjian.length untuk total soal
         $('#total-jawaban').text(jawabanData.length);
         
-        const totalNilai = jawabanData.reduce((sum, item) => sum + item.total_score, 0);
+        const totalNilai = jawabanData.reduce((sum, item) => sum + parseFloat(item.total_score), 0);
+        console.log("Total Nilai : " + totalNilai);
+        console.log(jawabanData)
         const rataNilai = jawabanData.length > 0 ? (totalNilai / jawabanData.length).toFixed(2) : 0;
         $('#rata-nilai').text(rataNilai);
     }
@@ -228,6 +231,20 @@ $(document).ready(function() {
     const updateSoalRealModal = $('#update-soal-real-modal');
     const updateUjian = $('#update-soal-modal');
 
+    let batalTambahUjian = document.getElementById('batal-tambah-ujian');
+    let batalTambahSoal = document.getElementById('batal-tambah-soal');
+
+    batalTambahUjian.onclick = (e) =>{
+        e.preventDefault();
+
+        soalModal.hide();
+    }
+
+    batalTambahSoal.onclick = (e) => {
+        e.preventDefault();
+        soalRealModal.hide();
+    }
+
     // untuk membuka modal ujian (ujian memiliki beberapa soal)
     $('#tambah-soal').click(function() {
         // Reset form sebelum menampilkan modal
@@ -240,6 +257,7 @@ $(document).ready(function() {
         // Reset form sebelum menampilkan modal
         $('#soal-real-form')[0].reset();
         soalRealModal.show();
+        $('#modal-custom').scrollTop(0);   // Scroll ke atas
     });
 
     // belum dan tidak dipakai
@@ -413,6 +431,7 @@ $(document).ready(function() {
     function ambilTema(){
         loadscreen();
         $.ajax(settings).done(function (response) {
+            console.log(response)
             temaUjian = response;
             soalTable.clear().rows.add(temaUjian).draw(); // Update DataTable setelah data diambil
             updateStats(); // Perbarui statistik setelah data tema diperbarui
