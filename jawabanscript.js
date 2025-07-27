@@ -2,11 +2,11 @@
    let myapi = "";
    let url1 = "https://nlpdata-5393.restdb.io/rest/";
    const url2 = "https://nlpdata2-9d3f.restdb.io/rest/";
-   const url3 = "http://localhost/aplikasi-slim/public/";
+   const url3 = "https://ujianpenjas.my.id/aplikasi-slim/public/";
    const myapi1 = "684301ad72702c6cc4b3d7d2";
    const myapi2 = "6843f2e8e22293a1177497af";
 
-   url = url1;
+   url = url3;
    myapi = myapi1;
    
    let temaUjian = []
