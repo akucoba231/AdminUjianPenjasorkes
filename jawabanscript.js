@@ -2,6 +2,7 @@
    let myapi = "";
    let url1 = "https://nlpdata-5393.restdb.io/rest/";
    const url2 = "https://nlpdata2-9d3f.restdb.io/rest/";
+   const url3 = "http://localhost/aplikasi-slim/public/";
    const myapi1 = "684301ad72702c6cc4b3d7d2";
    const myapi2 = "6843f2e8e22293a1177497af";
 
@@ -106,46 +107,46 @@
     let tmp = temaUjian.filter(item =>item.id == id_tema)
   temaUjian = tmp[0]; // ujian hanya 1
   lembarUjian = lembarUjian.filter(item=>item.id_tema == id_tema)
+
+
+  namaUjian.textContent = temaUjian.judul
+  kodeUjian.textContent = temaUjian.token
+
   
   if(lembarUjian.length <= 0){
     forbidden()
   }
   else {
     //do nothing
-  }
-  
-  
-  namaUjian.textContent = temaUjian.judul
-  kodeUjian.textContent = temaUjian.token
-  
-  let tableHead = document.querySelector('#dataTable thead');
-  let tableBody = document.querySelector('#dataTable tbody');
+
+    let tableHead = document.querySelector('#dataTable thead');
+    let tableBody = document.querySelector('#dataTable tbody');
   //console.log(tableHead)
-  tableHead.innerHTML = ""
-  tableBody.innerHTML = ""
+    tableHead.innerHTML = ""
+    tableBody.innerHTML = ""
 
   // untuk menambahkan judul ujian ke file
 
-  let titleRow = document.createElement('tr');
-  let titleTable = document.createElement('td');
-  titleTable.textContent = temaUjian.judul;
-  titleTable.setAttribute("colspan","19");
-  titleRow.appendChild(titleTable);
-  tableHead.appendChild(titleRow);
-  
-  for(let j = 0; j < 4; j++){
-    let emptyRow = document.createElement('tr');
-    let emptyCell = document.createElement('td');
-    emptyRow.appendChild(emptyCell)
+    let titleRow = document.createElement('tr');
+    let titleTable = document.createElement('td');
+    titleTable.textContent = temaUjian.judul;
+    titleTable.setAttribute("colspan","19");
+    titleRow.appendChild(titleTable);
+    tableHead.appendChild(titleRow);
 
-    tableHead.appendChild(emptyRow);
-  }
+    for(let j = 0; j < 4; j++){
+      let emptyRow = document.createElement('tr');
+      let emptyCell = document.createElement('td');
+      emptyRow.appendChild(emptyCell)
 
-  
-  
+      tableHead.appendChild(emptyRow);
+    }
+
+
+
   // untuk menambahkan thead
-  let headerRow = document.createElement('tr');
-  
+    let headerRow = document.createElement('tr');
+
   let rowTitle = ["nomor","tanggal","nama","kelas","absen","asalsekolah","email","total_score","judul_tema"] //Object.keys(lembarUjian[lembarUjian.length-1]);
   
   rowTitle.forEach((item)=>{
@@ -219,9 +220,11 @@
     
     tableBody.appendChild(tr)
   })
-  
-  
-  
+
+}
+
+
+
 }
 
 function getId(){
