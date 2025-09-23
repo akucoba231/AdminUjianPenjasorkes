@@ -731,8 +731,7 @@ $(document).ready(function() {
                 rincian.innerHTML = "<b>Soal</b> : " + item.rincian;
 
                 let jawab = document.createElement('p');
-                jawab.innerHTML = "<b>Jawaban Ideal</b> : " + item.keyword;
-
+                jawab.innerHTML = "<b>Jawaban Ideal</b> : " + item.ideal;
                 let word = document.createElement('p');
                 word.innerHTML = "<b>Kata Kunci</b> : " +  item.keyword;
 
