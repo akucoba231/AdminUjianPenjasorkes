@@ -1,4 +1,4 @@
-alert("sedang diperbaiki");
+alert("sedang diperbaiki 2");
 function share(token){
     alert(window.location.href + "?token=" + token)
  }
@@ -958,7 +958,7 @@ $(document).ready(function() {
     function hapusBannerOveride(){
         let hapusBanner = document.getElementById('hapus-banner')
         hapusBanner.style.display = "none";
-        descUjian.banner = "";
+        //descUjian.banner = "";
         simpanBanner("");
         previewBanner("");
     }
@@ -1057,7 +1057,7 @@ $(document).ready(function() {
         let previewImage = document.getElementById('preview-image');
         //hapusBannerVisible();
         previewImage.src = string;
-        descUjian.banner = string;
+        //descUjian.banner = string;
         if(string.length > 5){
          previewImage.src = string + "?" + getBase64(3);
         }
