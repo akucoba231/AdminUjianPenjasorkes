@@ -1059,7 +1059,7 @@ $(document).ready(function() {
         previewImage.src = string;
         //descUjian.banner = string;
         if(string.length > 5){
-          previewImage.src = url + "uploads/" + string + "?" + getBase64(3);
+          previewImage.src = url + "uploads/" + string; // + "?" + getBase64(3); //belum perlu deh
          }
         
         hapusBannerVisible();
