@@ -395,7 +395,7 @@ $(document).ready(function() {
 
     //23/06/2025
     //untuk data ujian yang dilihat
-    let descUjian;
+    let descUjian = {};
     // untuk banner
     descUjian['banner'] = "";
     // menampilkan soal per ujian
