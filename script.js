@@ -957,6 +957,7 @@ $(document).ready(function() {
     function hapusBannerOveride(){
         let hapusBanner = document.getElementById('hapus-banner')
         hapusBanner.style.display = "none";
+        descUjian.banner = "";
         simpanBanner("");
         previewBanner("");
     }
