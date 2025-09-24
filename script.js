@@ -1,4 +1,4 @@
-alert("sedang diperbaiki 2");
+alert("sedang diperbaiki 3");
 function share(token){
     alert(window.location.href + "?token=" + token)
  }
@@ -1058,9 +1058,9 @@ $(document).ready(function() {
         //hapusBannerVisible();
         previewImage.src = string;
         //descUjian.banner = string;
-        if(string.length > 5){
-         previewImage.src = string + "?" + getBase64(3);
-        }
+        // if(string.length > 5){
+        //  previewImage.src = string + "?" + getBase64(3);
+        // }
         
         hapusBannerVisible();
         
