@@ -1056,9 +1056,11 @@ $(document).ready(function() {
         let previewImage = document.getElementById('preview-image');
         //hapusBannerVisible();
         previewImage.src = string;
+        descUjian.banner = string;
         if(string.length > 5){
          previewImage.src = string + "?" + getBase64(3);
         }
+        
         hapusBannerVisible();
         
     }
