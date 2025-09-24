@@ -1,4 +1,4 @@
-alert("sedang diperbaiki 8");
+//alert("sedang diperbaiki 8");
 function share(token){
     alert(window.location.href + "?token=" + token)
  }
