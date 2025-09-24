@@ -1,4 +1,5 @@
- function share(token){
+alert("sedang diperbaiki");
+function share(token){
     alert(window.location.href + "?token=" + token)
  }
 
@@ -397,7 +398,7 @@ $(document).ready(function() {
     //untuk data ujian yang dilihat
     let descUjian = {};
     // untuk banner
-    //descUjian['banner'] = "";
+    descUjian['banner'] = "";
     // menampilkan soal per ujian
     $(document).on('click', '.btn-look', function() {
         $('.page').removeClass('active');
