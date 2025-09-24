@@ -1053,6 +1053,9 @@ $(document).ready(function() {
         let previewImage = document.getElementById('preview-image');
         //hapusBannerVisible();
         previewImage.src = string;
+        if(string.length > 5){
+         previewImage.src = string + "?" + getBase64(3);
+        }
         hapusBannerVisible();
         
     }
@@ -1116,3 +1119,28 @@ $(document).ready(function() {
 
 });
 
+function getBase64(many)
+{
+    if (many < 1) {
+        alert("Panjang karakter harus lebih besar dari 0.");
+    }
+
+    // Karakter Base64 URL-safe: A-Z, a-z, 0-9, '-', '_'
+    // Jumlah karakter = 26 (uppercase) + 26 (lowercase) + 10 (digits) + 2 (special) = 64 karakter
+    let base64Chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+    let charsCount = base64Chars.length;
+    let randomString = '';
+
+    // Gunakan loop untuk memilih karakter acak sebanyak $length
+    for (let i = 0; i < many; i++) {
+        // Mendapatkan indeks acak dari 0 hingga (jumlah karakter - 1)
+        // Fungsi random_int() direkomendasikan untuk keamanan kriptografi yang lebih baik
+        // dibandingkan rand() atau mt_rand()
+        let randomIndex = Math.floor(Math.random() * (charsCount-1));
+        
+        // Menambahkan karakter yang dipilih secara acak ke string hasil
+        randomString += base64Chars[randomIndex];
+    }
+
+    return randomString;
+}
