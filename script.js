@@ -1,4 +1,4 @@
-alert("sedang diperbaiki 4");
+alert("sedang diperbaiki 5");
 function share(token){
     alert(window.location.href + "?token=" + token)
  }
@@ -1111,7 +1111,7 @@ $(document).ready(function() {
         //loadscreen()
         $.ajax(setAktif).done(function (response) {
             console.log(response);
-            descUjian.banner = response.:banner;
+            descUjian.banner = response[":banner"];
             hapusBannerVisible();
             //loadscreen();
             //ambilTemaUpdate();
