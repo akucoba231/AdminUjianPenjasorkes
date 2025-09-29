@@ -55,7 +55,7 @@ $(document).ready(function() {
                     data: null,
                     render: function(data, type, row) {
                         return `
-                            <button class="btn-action btn-look" data-id="${row.id}" data-judul="${row.judul}"><i class="fas fa-eye"></i> Lihat</button>
+                            <button class="btn-action btn-look" data-id="${row.id}" data-judul="${row.judul}" data-tokenTema="${row.token}"><i class="fas fa-eye"></i> Lihat</button>
                             <button class="btn-action btn-edit" data-id="${row.id}" data-judul="${row.judul}"><i class="fas fa-edit"></i> Ubah</button>
                             <button class="btn-action btn-share" onclick="share('${row.token}')"><i class="fas fa-share"></i> Rilis</button>
                             <button class="btn-action btn-delete" data-id="${row.id}" data-api="${row._id}"><i class="fas fa-trash"></i> Hapus</button>
@@ -382,7 +382,7 @@ $(document).ready(function() {
     });
 
     //fungsi filter pada table daftar soal
-    function ambilSoalWhere(id_tema){
+    function ambilSoalWhere(id_tema,token_tema){
         // Filter data soalData berdasarkan id_tema yang diberikan
         const filteredSoal = soalData.filter(item => item.id_tema == id_tema); //array
         //soalRealTable.clear().rows.add(filteredSoal).draw();
@@ -390,7 +390,7 @@ $(document).ready(function() {
         //new function
         let cardSoal = $('.card-soal')[0];
         createListSoal(cardSoal, filteredSoal);
-        buka(id_tema);
+        buka(token_tema);
     }
 
 
@@ -405,6 +405,7 @@ $(document).ready(function() {
         $('#soal-real').addClass('active');
         const judulUjian = $(this).data('judul');
         const idTema = $(this).data('id');
+        const token_tema = $(this).data('tokenTema');
         descUjian = flashData(idTema);
         opsiUjian();
         if(descUjian.banner.length > 5){
@@ -414,7 +415,7 @@ $(document).ready(function() {
             previewBanner("")
         }
         $('#id-tema').val(idTema); // Set id_tema ke input hidden di form soal real
-        ambilSoalWhere(idTema);
+        ambilSoalWhere(idTema, token_tema);
         updateFABVisibility(); // Perbarui visibilitas FAB setelah navigasi
     });
 
@@ -672,7 +673,7 @@ $(document).ready(function() {
     }
     
     // fungsi untuk membuka halaman jawaban
-    function buka(id_tema){
+    function buka(token_tema){
       let cekUrl = window.location.href;
       if(cekUrl.includes('index.html')){
         cekUrl = cekUrl + "index.html";
@@ -681,12 +682,12 @@ $(document).ready(function() {
       let halamanJawaban = document.getElementById("halaman-jawaban");
       //console.log(halamanJawaban)
       
-      halamanJawaban.setAttribute('data-to', id_tema);
+      halamanJawaban.setAttribute('data-to', token_tema);
     
     //console.log(halamanJawaban)
     
       halamanJawaban.onclick = (e)=>{
-        return confirm("Anda akan dialihkan ke halaman jawaban, lanjutkan ?") ? window.open(base + "jawaban.html?id_tema=" + id_tema) : "";
+        return confirm("Anda akan dialihkan ke halaman jawaban, lanjutkan ?") ? window.open(base + "jawaban.html?token=" + token_tema) : "";
       }
     
     }
