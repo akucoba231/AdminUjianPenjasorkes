@@ -424,13 +424,14 @@ function getFilter(obj = {}){
 
     search = JSON.stringify(search).replace(/\\"/g,'');
     let tmp = search;
-    if(slimFr == true){
+    //if(slimFr == true){
         search = "/?q=" + tmp;
-    }
+    /*}
     else {
         search = "?q=" + tmp;
-    }
+    }*/
     return search; // string
+    
 }
 
 
