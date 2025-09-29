@@ -1,4 +1,4 @@
-console.log("Data berasal dari 2 server 8");
+console.log("Data berasal dari 2 server 10");
    let url = "";
    let myapi = "";
    let url1 = "https://nlpdata-5393.restdb.io/rest/";
@@ -52,7 +52,7 @@ console.log("Data berasal dari 2 server 8");
       temaUjian = response[0] //response sekarang hanya array 1 data
       console.log(temaUjian)
       setTimeout(()=>{
-         //ambilTema2();
+         ambilTema2();
         //ambilLembarUjian();
       }, 1000)
 
@@ -373,7 +373,7 @@ function getId(){
   }
 }
 
-//ambilTema()
+ambilTema()
 
 function forbidden(){
   alert("Mohon maaf data lembar ujian atau data jawaban tidak ditemukan.");
@@ -446,7 +446,7 @@ function getToken(){
   let tmp = window.location.href;
   tmp = tmp.split('?token=');
   if(tmp.length > 1){
-    return tmp;
+    return tmp[1];
   }
   else{
     //updateTable(25)
