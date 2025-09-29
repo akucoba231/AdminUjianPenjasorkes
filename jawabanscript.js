@@ -1,4 +1,4 @@
-console.log("Data berasal dari 2 server 4");
+console.log("Data berasal dari 2 server 8");
    let url = "";
    let myapi = "";
    let url1 = "https://nlpdata-5393.restdb.io/rest/";
@@ -11,6 +11,9 @@ console.log("Data berasal dari 2 server 4");
    let search = {
       "token" : getToken(),
    }
+
+   console.log(search);
+   console.log(getFilter(search));
 
    url = url3;
    myapi = myapi1;
@@ -370,7 +373,7 @@ function getId(){
   }
 }
 
-ambilTema()
+//ambilTema()
 
 function forbidden(){
   alert("Mohon maaf data lembar ujian atau data jawaban tidak ditemukan.");
