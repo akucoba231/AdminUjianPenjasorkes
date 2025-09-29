@@ -1,4 +1,4 @@
-console.log("Data berasal dari 2 server");
+console.log("Data berasal dari 2 server 2");
    let url = "";
    let myapi = "";
    let url1 = "https://nlpdata-5393.restdb.io/rest/";
