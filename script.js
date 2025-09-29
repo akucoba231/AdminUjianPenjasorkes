@@ -406,8 +406,8 @@ $(document).ready(function() {
         const judulUjian = $(this).data('judul');
         const idTema = $(this).data('id');
         const token_tema = $(this).data('tokentema');
-        alert(JSON.stringify(token_tema));
-        alert(idTema);
+        //alert(JSON.stringify(token_tema));
+        //alert(idTema);
         descUjian = flashData(idTema);
         opsiUjian();
         if(descUjian.banner.length > 5){
