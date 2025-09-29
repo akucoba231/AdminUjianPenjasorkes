@@ -1,4 +1,4 @@
-alert("server baru sedang diproses 2");
+alert("server baru sedang diproses 4");
 function share(token){
     alert(window.location.href + "?token=" + token)
  }
@@ -55,7 +55,7 @@ $(document).ready(function() {
                     data: null,
                     render: function(data, type, row) {
                         return `
-                            <button class="btn-action btn-look" data-id="${row.id}" data-judul="${row.judul}" data-tokenTema="${row.token}"><i class="fas fa-eye"></i> Lihat</button>
+                            <button class="btn-action btn-look" data-id="${row.id}" data-judul="${row.judul}" data-tokenTema="${row}"><i class="fas fa-eye"></i> Lihat</button>
                             <button class="btn-action btn-edit" data-id="${row.id}" data-judul="${row.judul}"><i class="fas fa-edit"></i> Ubah</button>
                             <button class="btn-action btn-share" onclick="share('${row.token}')"><i class="fas fa-share"></i> Rilis</button>
                             <button class="btn-action btn-delete" data-id="${row.id}" data-api="${row._id}"><i class="fas fa-trash"></i> Hapus</button>
@@ -406,7 +406,8 @@ $(document).ready(function() {
         const judulUjian = $(this).data('judul');
         const idTema = $(this).data('id');
         const token_tema = $(this).data('tokenTema');
-        alert(token_tema);
+        alert(JSON.stringify(token_tema));
+        alert(idTema);
         descUjian = flashData(idTema);
         opsiUjian();
         if(descUjian.banner.length > 5){
