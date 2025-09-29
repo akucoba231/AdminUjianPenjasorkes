@@ -1,10 +1,16 @@
+console.log("Data berasal dari 2 server");
    let url = "";
    let myapi = "";
    let url1 = "https://nlpdata-5393.restdb.io/rest/";
    const url2 = "https://nlpdata2-9d3f.restdb.io/rest/";
    const url3 = "https://ujianpenjas2.my.id/aplikasi-slim/public/";
+   const url4 = "https://ujianpenjas.my.id/aplikasi-slim/public/";
    const myapi1 = "684301ad72702c6cc4b3d7d2";
    const myapi2 = "6843f2e8e22293a1177497af";
+
+   let search = {
+      "token" : getToken(),
+   }
 
    url = url3;
    myapi = myapi1;
@@ -13,16 +19,21 @@
    let lembarUjian = []
    let dataJawaban = []
    
-   
+   let temaUjian2 = []
+   let lembarUjian2 = []
+   let dataJawaban2 = []
+
+
    let namaUjian = document.getElementById('nama-ujian');
    let kodeUjian = document.getElementById('kode-ujian');
    let tombolExport = document.getElementById('export');
    
     // fungsi untuk mengambil data judul ujian
+   
    let settings = {
     "async": true,
     "crossDomain": true,
-    "url": url + "tema",
+    "url": url + "tema" + getFilter(search),
     "method": "GET",  
     "headers": {
       "content-type": "application/json",
@@ -34,11 +45,11 @@
   function ambilTema(){
 
     $.ajax(settings).done(function (response) {
-      temaUjian = response
+      temaUjian = response[0] //response sekarang hanya array 1 data
             //console.log(response)
       setTimeout(()=>{
-
-        ambilLembarUjian();
+         ambilTema2();
+        //ambilLembarUjian();
       }, 1000)
 
     })
@@ -48,11 +59,44 @@
    });
   }
 
+// ambil tema server2
+ function ambilTema2(){
+   let settings2 = {
+    "async": true,
+    "crossDomain": true,
+    "url": url4 + "tema" + getFilter(search),
+    "method": "GET",  
+    "headers": {
+      "content-type": "application/json",
+      "x-apikey": `${myapi}`,
+      "cache-control": "no-cache"
+    }
+  }
+    
+    $.ajax(settings2).done(function (response) {
+      temaUjian2 = response[0] ////response sekarang hanya array 1 data
+            //console.log(response)
+      setTimeout(()=>{
+         //ambilTema2();
+         ambilLembarUjian();
+      }, 1000)
+
+    })
+    .fail(function(e){
+     console.log(JSON.stringify(e))
+     kodeUjian.textContent = JSON.stringify(e)
+   });
+    
+ }
+
     // fungsi untuk mengambil lembar ujian
+  let filterUjian = {
+     "id_tema" : temaUjian.id,
+  }
   let lembarSet = {
     "async": true,
     "crossDomain": true,
-    "url": url + "lembarujian",
+    "url": url + "lembarujian" + getFilter(filterUjian),
     "method": "GET",  
     "headers": {
       "content-type": "application/json",
@@ -67,7 +111,39 @@
       lembarUjian = response
            // console.log(response)
       setTimeout(()=>{
-        ambilJawaban();
+         ambilLembarUjian2();
+        //ambilJawaban();
+      }, 1000)
+    })
+    .fail(function(e){
+     console.log(e.toString())
+     kodeUjian.textContent = JSON.stringify(e)
+   });
+  }
+
+// ambil lembar ujian server2
+  function ambilLembarUjian2(){
+     let filterUjian2 = {
+        "id_tema" : temaUjian2.id,
+     }
+     let lembarSet2 = {
+    "async": true,
+    "crossDomain": true,
+    "url": url4 + "lembarujian" + getFilter(filterUjian2),
+    "method": "GET",  
+    "headers": {
+      "content-type": "application/json",
+      "x-apikey": `${myapi}`,
+      "cache-control": "no-cache"
+    }
+  }
+
+    $.ajax(lembarSet2).done(function (response) {
+      lembarUjian2 = response
+           // console.log(response)
+      setTimeout(()=>{
+         //ambilLembarUjian2();
+         ambilJawaban();
       }, 1000)
     })
     .fail(function(e){
@@ -77,10 +153,13 @@
   }
 
     // fungsi untuk mengambil jawaban
+  let filterJawaban = {
+     "id_tema" : temaUjian.id
+   }
   let jawabanSet = {
     "async": true,
     "crossDomain": true,
-    "url": url + "jawaban",
+    "url": url + "jawaban" + getFilter(filterJawaban),
     "method": "GET",  
     "headers": {
       "content-type": "application/json",
@@ -94,7 +173,11 @@
     $.ajax(jawabanSet).done(function (response) {
       dataJawaban = response
            // console.log(response)
-      getId();
+       setTimeout(()=>{
+          ambilJawaban2();
+         //getId(); 
+       }, 1500
+       )
     })
     .fail(function(e){
      console.log(e.toString())
@@ -102,18 +185,62 @@
    });
   }
 
-  function updateTable(id_tema){
+// ambil jawaban server2
+function ambilJawaban2(){
+
+  let filterJawaban2 = {
+     "id_tema" : temaUjian2.id
+   }
+  let jawabanSet2 = {
+    "async": true,
+    "crossDomain": true,
+    "url": url4 + "jawaban" + getFilter(filterJawaban2),
+    "method": "GET",  
+    "headers": {
+      "content-type": "application/json",
+      "x-apikey": `${myapi}`,
+      "cache-control": "no-cache"
+    }
+  }
+
+    $.ajax(jawabanSet2).done(function (response) {
+      dataJawaban2 = response
+           // console.log(response)
+       setTimeout(()=>{
+          //ambilJawaban2();
+         getId(); 
+       }, 500
+       )
+    })
+    .fail(function(e){
+     console.log(e.toString())
+     kodeUjian.textContent = JSON.stringify(e)
+   });
+  }
+
+
+
+  function updateTable(token_tema){
   //console.log(temaUjian);
-    let tmp = temaUjian.filter(item =>item.id == id_tema)
-  temaUjian = tmp[0]; // ujian hanya 1
-  lembarUjian = lembarUjian.filter(item=>item.id_tema == id_tema)
-
-
+  //let tmp = temaUjian.filter(item =>item.token == token_tema);
+  //temaUjian = tmp[0]; // ujian hanya 1 //update sudah bukan array
+  //lembarUjian = lembarUjian.filter(item=>item.id_tema == temaUjian.id);
+  // karena data temaUjian dan temaUjian2 sudah bukan array, lanjut ke sesi selanjutnya
+  // server utama
+  lembarUjian = lembarUjian.filter(item=>item.id_tema == temaUjian.id);
+  // server 2
+  lembarUjian2 = lembarUjian2.filter(item=>item.id_tema == temaUjian2.id);
+  // penyatuan semua data
+  let allLembarUjian = mergeUnique(lembarUjian, lembarUjian2); //lihat fungsi mergeUnique
+  let allDataJawaban = mergeUnique(dataJawaban, dataJawaban2);
+   
+  console.log(allLembarUjian);
+     
   namaUjian.textContent = temaUjian.judul
   kodeUjian.textContent = temaUjian.token
 
   
-  if(lembarUjian.length <= 0){
+  if(allLembarUjian.length <= 0){ //data semua ujian
     forbidden()
   }
   else {
@@ -204,8 +331,8 @@
    //untuk mendapatkan semua jawaban siswa ini
     let jawabanSiswaIni = []
 
-    dataJawaban.forEach((coba)=>{
-      if(coba['id_lembar_ujian'] == item.id_lembar_ujian){
+    allDataJawaban.forEach((coba)=>{
+      if(coba['id_lembar_ujian'] == item._id){
         //console.log(true)
         jawabanSiswaIni.push(coba)
         let tdJawaban = document.createElement('td');
@@ -229,7 +356,7 @@
 
 function getId(){
   let tmp = window.location.href;
-  tmp = tmp.split('?id_tema=');
+  tmp = tmp.split('?token=');
   if(tmp.length > 1){
     updateTable(tmp[1])
   }
@@ -281,4 +408,50 @@ function thisTime(){
   let timestamp = ts.getFullYear() + '-' + tsMonth + '-' + tsDate; //+ ' ' + ts.getHours() + ':' + ts.getMinutes() + ':' + ts.getSeconds();
   
   return timestamp;
+}
+
+// fungsi tambahan untuk mengurangi beban server
+function getFilter(obj = {}){
+    let search = obj;
+    // search["id_tema"] = ujian.id
+
+    // if(email == ""){
+    //     search["nama"] = nama;
+    // }
+    // else {
+    //     search["email"] = email;
+    // }
+
+    search = JSON.stringify(search).replace(/\\"/g,'');
+    let tmp = search;
+    if(slimFr == true){
+        search = "/?q=" + tmp;
+    }
+    else {
+        search = "?q=" + tmp;
+    }
+    return search; // string
+}
+
+
+function getToken(){   
+  let tmp = window.location.href;
+  tmp = tmp.split('?token=');
+  if(tmp.length > 1){
+    return tmp;
+  }
+  else{
+    //updateTable(25)
+    //forbidden()
+     alert('Token tidak ditemukan.');
+     forbidden();
+  }
+}
+
+function mergeUnique(arr1, arr2) {
+  return Array.from(
+    new Map(
+      [...arr1, ...arr2].map(obj => [JSON.stringify(obj), obj])
+    ).values()
+  );
 }
