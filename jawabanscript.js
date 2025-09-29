@@ -1,4 +1,4 @@
-console.log("Data berasal dari 2 server 10");
+console.log("Data berasal dari 2 server 11");
    let url = "";
    let myapi = "";
    let url1 = "https://nlpdata-5393.restdb.io/rest/";
@@ -238,8 +238,8 @@ function ambilJawaban2(){
   // server 2
   lembarUjian2 = lembarUjian2.filter(item=>item.id_tema == temaUjian2.id);
   // penyatuan semua data
-  let allLembarUjian = mergeUnique(lembarUjian, lembarUjian2); //lihat fungsi mergeUnique
-  let allDataJawaban = mergeUnique(dataJawaban, dataJawaban2);
+  let allLembarUjian = [...lembarUjian,...lembarUjian2]; //mergeUnique(lembarUjian, lembarUjian2); //lihat fungsi mergeUnique
+  let allDataJawaban = [...dataJawaban,...dataJawaban2]; //mergeUnique(dataJawaban, dataJawaban2);
    
   console.log(allLembarUjian);
      
