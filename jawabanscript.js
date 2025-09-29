@@ -46,9 +46,9 @@ console.log("Data berasal dari 2 server");
 
     $.ajax(settings).done(function (response) {
       temaUjian = response[0] //response sekarang hanya array 1 data
-            //console.log(response)
+      console.log(temaUjian)
       setTimeout(()=>{
-         ambilTema2();
+         //ambilTema2();
         //ambilLembarUjian();
       }, 1000)
 
