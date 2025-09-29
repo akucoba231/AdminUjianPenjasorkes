@@ -1,4 +1,4 @@
-alert("server baru sedang diproses");
+alert("server baru sedang diproses 2");
 function share(token){
     alert(window.location.href + "?token=" + token)
  }
@@ -406,6 +406,7 @@ $(document).ready(function() {
         const judulUjian = $(this).data('judul');
         const idTema = $(this).data('id');
         const token_tema = $(this).data('tokenTema');
+        alert(token_tema);
         descUjian = flashData(idTema);
         opsiUjian();
         if(descUjian.banner.length > 5){
