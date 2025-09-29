@@ -1,4 +1,4 @@
-console.log("Data berasal dari 2 server 2");
+console.log("Data berasal dari 2 server 4");
    let url = "";
    let myapi = "";
    let url1 = "https://nlpdata-5393.restdb.io/rest/";
@@ -29,7 +29,10 @@ console.log("Data berasal dari 2 server 2");
    let tombolExport = document.getElementById('export');
    
     // fungsi untuk mengambil data judul ujian
+
    
+  function ambilTema(){
+
    let settings = {
     "async": true,
     "crossDomain": true,
@@ -41,8 +44,6 @@ console.log("Data berasal dari 2 server 2");
       "cache-control": "no-cache"
     }
   }
-
-  function ambilTema(){
 
     $.ajax(settings).done(function (response) {
       temaUjian = response[0] //response sekarang hanya array 1 data
@@ -90,6 +91,9 @@ console.log("Data berasal dari 2 server 2");
  }
 
     // fungsi untuk mengambil lembar ujian
+
+  function ambilLembarUjian(){
+
   let filterUjian = {
      "id_tema" : temaUjian.id,
   }
@@ -104,8 +108,6 @@ console.log("Data berasal dari 2 server 2");
       "cache-control": "no-cache"
     }
   }
-
-  function ambilLembarUjian(){
 
     $.ajax(lembarSet).done(function (response) {
       lembarUjian = response
@@ -153,7 +155,10 @@ console.log("Data berasal dari 2 server 2");
   }
 
     // fungsi untuk mengambil jawaban
-  let filterJawaban = {
+  function ambilJawaban(){
+
+
+let filterJawaban = {
      "id_tema" : temaUjian.id
    }
   let jawabanSet = {
@@ -168,7 +173,6 @@ console.log("Data berasal dari 2 server 2");
     }
   }
 
-  function ambilJawaban(){
 
     $.ajax(jawabanSet).done(function (response) {
       dataJawaban = response
