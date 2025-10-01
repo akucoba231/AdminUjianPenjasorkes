@@ -1,4 +1,4 @@
-alert("server baru sedang diproses");
+//alert("server baru sedang diproses");
 function share(token){
     alert(window.location.href + "?token=" + token)
  }
