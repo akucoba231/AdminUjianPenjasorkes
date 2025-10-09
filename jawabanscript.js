@@ -35,7 +35,7 @@ alert("Data berasal dari 2 server 12");
 
    
   function ambilTema(){
-
+   status("Mengambil data dari server 1...");
    let settings = {
     "async": true,
     "crossDomain": true,
@@ -50,7 +50,8 @@ alert("Data berasal dari 2 server 12");
 
     $.ajax(settings).done(function (response) {
       temaUjian = response[0] //response sekarang hanya array 1 data
-      console.log(temaUjian)
+      console.log(temaUjian);
+      status("Data dari server 1 berhasil diterima");
       setTimeout(()=>{
          ambilTema2();
         //ambilLembarUjian();
@@ -59,12 +60,14 @@ alert("Data berasal dari 2 server 12");
     })
     .fail(function(e){
      console.log(JSON.stringify(e))
-     kodeUjian.textContent = JSON.stringify(e)
+    status("Data ujian server 1 gagal diambil");
    });
   }
 
 // ambil tema server2
  function ambilTema2(){
+    status("Mengambil data dari server 2...");
+
    let settings2 = {
     "async": true,
     "crossDomain": true,
@@ -80,6 +83,7 @@ alert("Data berasal dari 2 server 12");
     $.ajax(settings2).done(function (response) {
       temaUjian2 = response[0] ////response sekarang hanya array 1 data
             //console.log(response)
+      status("Data dari server 2 berhasil diterima");
       setTimeout(()=>{
          //ambilTema2();
          ambilLembarUjian();
@@ -88,7 +92,7 @@ alert("Data berasal dari 2 server 12");
     })
     .fail(function(e){
      console.log(JSON.stringify(e))
-     kodeUjian.textContent = JSON.stringify(e)
+      status("Data ujian server 2 gagal diambil");
    });
     
  }
@@ -96,6 +100,8 @@ alert("Data berasal dari 2 server 12");
     // fungsi untuk mengambil lembar ujian
 
   function ambilLembarUjian(){
+
+  status("Mengambil data lembar ujian dari server 1...");
 
   let filterUjian = {
      "id_tema" : temaUjian.id,
@@ -115,6 +121,7 @@ alert("Data berasal dari 2 server 12");
     $.ajax(lembarSet).done(function (response) {
       lembarUjian = response
            // console.log(response)
+      status("Data lembar ujian server 1 berhasil diterima.");
       setTimeout(()=>{
          ambilLembarUjian2();
         //ambilJawaban();
@@ -122,12 +129,14 @@ alert("Data berasal dari 2 server 12");
     })
     .fail(function(e){
      console.log(e.toString())
-     kodeUjian.textContent = JSON.stringify(e)
+    status("Data lembar ujian server 1 gagal diambil");
    });
   }
 
 // ambil lembar ujian server2
   function ambilLembarUjian2(){
+    status("Mengambil data lembar ujian dari server 2...");
+
      let filterUjian2 = {
         "id_tema" : temaUjian2.id,
      }
@@ -145,6 +154,7 @@ alert("Data berasal dari 2 server 12");
 
     $.ajax(lembarSet2).done(function (response) {
       lembarUjian2 = response
+      status("Data lembar ujian dari server 2 berhasil diterima");
            // console.log(response)
       setTimeout(()=>{
          //ambilLembarUjian2();
@@ -153,32 +163,33 @@ alert("Data berasal dari 2 server 12");
     })
     .fail(function(e){
      console.log(e.toString())
-     kodeUjian.textContent = JSON.stringify(e)
+     status("Data lembar ujian dari server 2 gagal diambil");
    });
   }
 
     // fungsi untuk mengambil jawaban
   function ambilJawaban(){
+      status("Mengambil data jawaban dari server 1...");
 
-
-let filterJawaban = {
-     "id_tema" : temaUjian.id
-   }
-  let jawabanSet = {
-    "async": true,
-    "crossDomain": true,
-    "url": url + "jawaban" + getFilter(filterJawaban),
-    "method": "GET",  
-    "headers": {
-      "content-type": "application/json",
-      "x-apikey": `${myapi}`,
-      "cache-control": "no-cache"
+      let filterJawaban = {
+        "id_tema" : temaUjian.id
+      }
+      let jawabanSet = {
+        "async": true,
+        "crossDomain": true,
+        "url": url + "jawaban" + getFilter(filterJawaban),
+        "method": "GET",  
+        "headers": {
+          "content-type": "application/json",
+          "x-apikey": `${myapi}`,
+          "cache-control": "no-cache"
+        }
     }
-  }
 
 
     $.ajax(jawabanSet).done(function (response) {
       dataJawaban = response
+      status("Data jawaban dari server 1 berhasil diterima");
            // console.log(response)
        setTimeout(()=>{
           ambilJawaban2();
@@ -188,12 +199,13 @@ let filterJawaban = {
     })
     .fail(function(e){
      console.log(e.toString())
-     kodeUjian.textContent = JSON.stringify(e)
+      status("Data jawaban dari server 1 gagal diterima");
    });
   }
 
 // ambil jawaban server2
 function ambilJawaban2(){
+  status("Mengambil data jawaban dari server 2...");
 
   let filterJawaban2 = {
      "id_tema" : temaUjian2.id
@@ -212,6 +224,7 @@ function ambilJawaban2(){
 
     $.ajax(jawabanSet2).done(function (response) {
       dataJawaban2 = response
+      status("Data jawaban dari server 2 berhasil diterima");
            // console.log(response)
        setTimeout(()=>{
           //ambilJawaban2();
@@ -220,8 +233,8 @@ function ambilJawaban2(){
        )
     })
     .fail(function(e){
-     console.log(e.toString())
-     kodeUjian.textContent = JSON.stringify(e)
+      console.log(e.toString())
+      status("Data jawaban dari server 2 gagal diterima");
    });
   }
 
@@ -462,4 +475,8 @@ function mergeUnique(arr1, arr2) {
       [...arr1, ...arr2].map(obj => [JSON.stringify(obj), obj])
     ).values()
   );
+}
+
+function status(str){
+  kodeUjian.textContent = str;
 }
