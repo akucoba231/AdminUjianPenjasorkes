@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
     <script>
+        
         if(sessionStorage.getItem('guru-login') == undefined){
+          alert('login dahulu');
           document.location.href = "login.html"
         }
     </script>
