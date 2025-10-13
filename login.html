@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk / Daftar - Akun</title>
+    <style>
+        /* CSS internal untuk styling */
+        body {
+            font-family: Roboto, Arial, sans-serif;
+            background-color: #f1f3f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #fff;
+            padding: 48px 40px 36px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302), 0 4px 8px 3px rgba(60,64,67,0.149);
+            width: 100%;
+            max-width: 450px;
+            box-sizing: border-box;
+            transition: height 0.3s ease; /* Transisi untuk perubahan tinggi */
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 500;
+            color: #4285f4;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 400;
+            color: #202124;
+            margin: 0;
+        }
+
+        p {
+            font-size: 16px;
+            color: #5f6368;
+            margin-top: 8px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #1a73e8;
+            margin-bottom: 4px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group input[type="email"] {
+            width: 100%;
+            padding: 15px 15px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1a73e8;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 32px;
+        }
+
+        .btn {
+            background-color: #1a73e8;
+            color: #fff;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #1669c2;
+        }
+
+        .error-message {
+            color: #d93025;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: left;
+            display: none;
+            font-weight: 500;
+        }
+
+        /* Tautan sederhana */
+        a {
+            color: #1a73e8;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer; /* Menjadikan tautan dapat diklik */
+        }
+
+        a.link-left {
+            padding-right: 16px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Styling untuk transisi form */
+        #login-view, #signup-view {
+            display: none; /* Sembunyikan semua secara default */
+        }
+
+        #login-view.active, #signup-view.active {
+            display: block; /* Tampilkan form yang aktif */
+        }
+
+        /* Perbaikan tata letak untuk form pendaftaran */
+        .name-group {
+            display: flex;
+            gap: 16px;
+        }
+
+        .name-group .form-group {
+            flex: 1;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="header">
+            <div class="logo-text">An Ability Mention | Teacher's Site</div>
+            <h1 id="form-title">Masuk</h1>
+            <p id="form-subtitle">Gunakan Akun Anda</p>
+        </div>
+
+        <div class="error-message" id="errorMessage">
+            Mohon isi semua kolom yang wajib diisi.
+        </div>
+
+        <div id="login-view" class="active">
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="text" id="login-username" name="username" placeholder="Username atau email">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="login-password" name="password" placeholder="Password">
+                </div>
+
+                <p style="font-size: 14px; margin-bottom: 0; display: none;">
+                    Bukan komputer Anda? Gunakan mode Tamu untuk masuk secara pribadi.
+                    <a href="#">Pelajari lebih lanjut</a>
+                </p>
+
+                <div class="actions">
+                    <a id="link-to-signup" class="link-left" style="display:none;">Buat akun</a>
+                    <button type="submit" class="btn">Berikutnya</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="signup-view">
+            <form id="signupForm">
+                <div class="name-group">
+                    <div class="form-group">
+                        <input type="text" id="signup-nama-depan" name="nama_depan" placeholder="Nama Depan">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="signup-nama-belakang" name="nama_belakang" placeholder="Nama Belakang">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" id="signup-email" name="email" placeholder="Email Anda">
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="signup-password" name="password" placeholder="Password">
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="signup-konfirmasi-password" name="konfirmasi_password" placeholder="Konfirmasi Password">
+                </div>
+
+                <div class="actions">
+                    <a id="link-to-login" class="link-left">Masuk</a>
+                    <button type="submit" class="btn">Berikutnya</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // DOM ELEMENTS
+        const loginView = document.getElementById('login-view');
+        const signupView = document.getElementById('signup-view');
+        const linkToSignup = document.getElementById('link-to-signup');
+        const linkToLogin = document.getElementById('link-to-login');
+        const formTitle = document.getElementById('form-title');
+        const formSubtitle = document.getElementById('form-subtitle');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // --- FUNGSI NAVIGASI FORM (Menggunakan DOM) ---
+        function showLogin() {
+            loginView.classList.add('active');
+            signupView.classList.remove('active');
+            formTitle.textContent = 'Masuk';
+            formSubtitle.textContent = 'Gunakan Akun Anda';
+            errorMessage.style.display = 'none'; // Bersihkan error saat beralih
+        }
+
+        function showSignup() {
+            loginView.classList.remove('active');
+            signupView.classList.add('active');
+            formTitle.textContent = 'Buat Akun';
+            formSubtitle.textContent = 'Masukkan informasi Anda';
+            errorMessage.style.display = 'none'; // Bersihkan error saat beralih
+        }
+
+        // Event Listener untuk Beralih Tampilan
+        linkToSignup.addEventListener('click', showSignup);
+        linkToLogin.addEventListener('click', showLogin);
+
+        // --- FUNGSI VALIDASI LOGIN ---
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+
+            if (username === '' || password === '') {
+                errorMessage.textContent = 'Mohon isi username/email dan password.';
+                errorMessage.style.display = 'block';
+            } else {
+                //errorMessage.style.display = 'none';
+                errorMessage.style.color = 'green';
+                errorMessage.textContent = "sedang diproses..."
+                //alert('Login Berhasil (Demo)! Username: ' + username);
+                // Di sini Anda akan melakukan fetch() ke server
+                processLogin(username,password);
+            }
+        });
+
+        // --- FUNGSI VALIDASI BUAT AKUN ---
+        signupForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const namaDepan = document.getElementById('signup-nama-depan').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value.trim();
+            const konfirmasiPassword = document.getElementById('signup-konfirmasi-password').value.trim();
+
+            if (namaDepan === '' || email === '' || password === '' || konfirmasiPassword === '') {
+                errorMessage.textContent = 'Semua kolom bertanda wajib diisi.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            
+            if (password !== konfirmasiPassword) {
+                errorMessage.textContent = 'Password dan Konfirmasi Password tidak cocok.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Jika validasi sukses:
+            errorMessage.style.display = 'none';
+            alert('Pendaftaran Berhasil (Demo)! Email: ' + email);
+            // Di sini Anda akan melakukan fetch() ke server
+        });
+        
+        function processLogin(user, pass){
+          let tmpUser = user.toLowerCase();
+          let tmpPass = pass.toLowerCase();
+          if(tmpUser == "admin"){
+            if(tmpPass == "admin#1234"){
+              allowAccess();
+            }
+            else {
+              reject('password salah');
+            }
+          } else {
+            reject("akun tidak terdaftar");
+          }
+        }
+        
+        function reject(str){
+          errorMessage.style.color = "#d93025";
+          errorMessage.textContent = str
+        }
+        
+        function allowAccess(){
+          errorMessage.style.color = "green"
+          errorMessage.textContent = "Akun ditemukan"
+          saveSession();
+          setTimeout(()=>{
+            document.location.href = "index.html"
+          }, )
+        }
+        
+        function saveSession(){
+          sessionStorage.setItem('guru-login','true');
+        }
+    </script>
+
+</body>
+</html>
+                  
