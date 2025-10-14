@@ -252,6 +252,16 @@ function ambilJawaban2(){
   lembarUjian2 = lembarUjian2.filter(item=>item.id_tema == temaUjian2.id);
   // penyatuan semua data
   let allLembarUjian = [...lembarUjian,...lembarUjian2]; //mergeUnique(lembarUjian, lembarUjian2); //lihat fungsi mergeUnique
+  
+  // sort by tanggal
+  const dataTerurut = allLembarUjian.sort((a, b) => {
+  const tglA = Date.parse(a.tanggal.replace(/\//g, '-'));
+  const tglB = Date.parse(b.tanggal.replace(/\//g, '-'));
+  return tglA - tglB;
+  });
+  
+  allLembarUjian = dataTerurut;
+     
   let allDataJawaban = [...dataJawaban,...dataJawaban2]; //mergeUnique(dataJawaban, dataJawaban2);
    
   console.log(allLembarUjian);
