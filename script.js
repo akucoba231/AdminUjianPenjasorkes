@@ -1153,3 +1153,7 @@ function getBase64(many)
 
     return randomString;
 }
+
+let yf = document.getElementById('yf'); //tahun untuk footer
+let dt = new Date();
+yf.textContent = dt.getFullYear();
