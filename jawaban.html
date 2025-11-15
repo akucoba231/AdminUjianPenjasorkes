@@ -95,27 +95,32 @@
         }
     </style>
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script> </head>
-<body>
+    <body>
 
-    <h1>Halaman Jawaban Ujian Penjaskorkes</h1>
-    <h2 id="nama-ujian">Data sedang dimuat</h2>
-    <h3 id="kode-ujian">Data sedang dimuat</h3>
+        <h1>Halaman Jawaban Ujian Penjaskorkes</h1>
+        <h2 id="nama-ujian">Data sedang dimuat</h2>
+        <h3 id="kode-ujian">Data sedang dimuat</h3>
 
-    <div class="button-container">
-        <button class="export-button" id="export" onclick="exportToXLSX()">Export to XLSX</button>
-    </div>
+        <div class="button-container">
+            <button class="export-button" id="export" onclick="exportToXLSX()">Export to XLSX</button>
+        </div>
 
-    <div class="table-wrapper">
-        <table id="dataTable">
-            <thead>
-                
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-    
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-     <script src="jawabanscript.js"></script>
-</body>
-</html>
+        <div class="table-wrapper">
+            <table id="dataTable">
+                <thead>
+
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <footer class="footer" style="width: 100%; padding: 1.5em 3em; text-align: center;">
+            <p>PJOK Learning &copy; <span id="yf">2025</span> oleh Helmy Fauzi, S. Pd</p>
+        </footer>
+
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="jawabanscript.js"></script>
+    </body>
+    </html>
