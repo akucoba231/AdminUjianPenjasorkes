@@ -182,6 +182,7 @@
                     <button type="submit" class="btn">Berikutnya</button>
                 </div>
             </form>
+
         </div>
 
         <div id="signup-view">
@@ -214,6 +215,10 @@
             </form>
         </div>
     </div>
+
+        <footer class="footer" style="position: fixed; bottom: 3%; left: 50%; transform: translate(-50%); width: 100%; padding: 1.5em 3em; text-align: center;">
+            <p>PJOK Learning &copy; <span id="yf">2025</span> oleh Helmy Fauzi, S. Pd</p>
+        </footer>
 
     <script>
         // DOM ELEMENTS
@@ -327,6 +332,11 @@
         function saveSession(){
           sessionStorage.setItem('guru-login','true');
         }
+
+        
+let yf = document.getElementById('yf'); //tahun untuk footer
+let dt = new Date();
+yf.textContent = dt.getFullYear();
     </script>
 
 </body>
