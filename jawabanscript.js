@@ -490,3 +490,8 @@ function mergeUnique(arr1, arr2) {
 function status(str){
   kodeUjian.textContent = str;
 }
+
+
+let yf = document.getElementById('yf'); //tahun untuk footer
+let dt = new Date();
+yf.textContent = dt.getFullYear();
